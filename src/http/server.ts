@@ -1,27 +1,20 @@
 import fastify from "fastify";
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
+import cookie from "@fastify/cookie";
+import { createPoll } from "./routes/create-poll";
+import { getPoll } from "./routes/get-poll";
+import { voteOnPoll } from "./routes/vote-on-poll";
 
 // fastify é um sistema de roteamento
 const app = fastify();
 
-const prisma = new PrismaClient();
+app.register(cookie,{
+	secret: "polls-app-nlw",  
+	hook: "onRequest", 
+} );
 
-app.post("/polls", async (request, reply) => {
-	const createPollBody = z.object({
-		title: z.string(),
-	});
-
-	const { title } = createPollBody.parse(request.body);
-
-	const poll = await prisma.poll.create({
-		data: {
-			title,
-		},
-	});
-
-	return reply.status(201).send({pollId: poll.id})
-});
+app.register(createPoll);
+app.register(getPoll);
+app.register(voteOnPoll);
 
 // Quando acessar a localhost nesta porta, irá para a API
 app.listen({ port: 3333 }).then(() => {
