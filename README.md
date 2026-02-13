@@ -1,5 +1,7 @@
 # 🚀 polls-real-time
 
+Desenvolvido na trilha NLW 2024 Expert Node.js 
+
 API de votação em tempo real desenvolvida com foco em **performance, escalabilidade e baixa latência**, ideal para aplicações que exigem atualizações instantâneas de resultados.
 
 Este repositório contém o **back-end** da aplicação. Ele gerencia criação de enquetes (*polls*), coleta de votos e entrega de resultados ao vivo para múltiplos clientes conectados simultaneamente.
